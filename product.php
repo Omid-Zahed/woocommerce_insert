@@ -59,8 +59,15 @@ class meta_data extends object_data{
     }
     function dele($meta_id){}
     function delet_all_postMeta($postID){}
-    function get_all_postMeta($postID){}
-    function get($meta_id){}
+    function get_all_postMeta($post_id){
+        return   $this->getdb($this->tabelName)->select("WHERE `post_id`= ? ", [$post_id])->fetchAll();
+    }
+    function get($meta_id){
+        return   $this->getdb($this->tabelName)->select("WHERE `meta_id`= ?", [$meta_id])->fetch();
+    }
+    function getBYkey($post_id,$meta_key){
+        return   $this->getdb($this->tabelName)->select("WHERE `post_id`= ? AND `meta_key`= ? ", [$post_id,$meta_key])->fetch();
+    }  
     function update($meta_id,$post_id,$meta_key,$meta_value){}
     function insert($post_id,$meta_key,$meta_value){
         $tb= $this->getDB($this->tabelName);
