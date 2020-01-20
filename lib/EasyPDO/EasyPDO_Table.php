@@ -62,7 +62,10 @@ class EasyPDO_Table {
         }
         return $r;
     }
-
+    
+    public function LastId(){
+        return    (int)$this->db->query("SELECT MAX(ID) FROM ".$this->name)->fetch()[0];
+    }
     public function delete($where = '', $vals = NULL) {
         if ($vals != NULL) {
             $r = $this->db->prepare("DELETE FROM `" . $this->name . "`" . $where);

@@ -36,9 +36,16 @@ class product extends object_data {
         $this->tabel=$tabel;
     }
     public function create          ($arrayProperty){
+        
+        
         $tb=$this->getDB($this->tabel);
         $tb->cols=["post_title","post_content","post_excerpt","post_name","post_type"];
         $tb->insert($arrayProperty, TRUE);
+        $post_id=$tb->LastId();
+        $money=12000;
+        $meta=new meta_data();
+        $meta->insert($post_id, "_price", $money);
+       
     }
     public function delet           ($id){
         $this->delet_item($this->tabel, $id);
@@ -86,9 +93,9 @@ $product=new product();
 //post_excerpt
 //post_name ->url
 
-$metaPost=new meta_data();
-$metaPost->insert(12, "this is test meta", "this worck :)");
+//$metaPost=new meta_data();
+//$metaPost->insert(12, "this is test meta", "this worck :)");
 //$product->create(["game","this is post content","this is post mini","dsfasdfada","product"]);
-
+$product->create(["post_title","post_content","post_excerpt","post_name","product"]);
 
 //dump($product->getAll());
