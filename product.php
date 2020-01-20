@@ -62,7 +62,11 @@ class meta_data extends object_data{
     function get_all_postMeta($postID){}
     function get($meta_id){}
     function update($meta_id,$post_id,$meta_key,$meta_value){}
-    function insert($post_id,$meta_key,$meta_value){}
+    function insert($post_id,$meta_key,$meta_value){
+        $tb= $this->getDB($this->tabelName);
+        $tb->cols=["post_id","meta_key","meta_value"];
+        $tb->insert([$post_id,$meta_key,$meta_value], true);
+    }
     
     
 }    
@@ -76,7 +80,7 @@ $product=new product();
 //post_name ->url
 
 $metaPost=new meta_data();
-
+$metaPost->insert(12, "this is test meta", "this worck :)");
 //$product->create(["game","this is post content","this is post mini","dsfasdfada","product"]);
 
 
