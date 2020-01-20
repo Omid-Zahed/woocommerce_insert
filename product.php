@@ -49,16 +49,20 @@ class product extends object_data {
     
     
     }
-    
+    	
+
+
 class meta_data extends object_data{
     public $tabelName=null;
     public function __construct($tabelName="wp_postmeta") {
         $this->tabelName=$tabelName;
     }
-    function dele($id){}
-    function update(){}
-    function get(){}
-    function insert(){}
+    function dele($meta_id){}
+    function delet_all_postMeta($postID){}
+    function get_all_postMeta($postID){}
+    function get($meta_id){}
+    function update($meta_id,$post_id,$meta_key,$meta_value){}
+    function insert($post_id,$meta_key,$meta_value){}
     
     
 }    
@@ -76,4 +80,4 @@ $metaPost=new meta_data();
 //$product->create(["game","this is post content","this is post mini","dsfasdfada","product"]);
 
 
-dump($product->getAll());
+//dump($product->getAll());
