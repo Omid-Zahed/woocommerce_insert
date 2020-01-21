@@ -1,5 +1,4 @@
 <?php
-
 require './lib/EasyPDO/easypdo.php';
 require_once  __DIR__.'/vendor/autoload.php';
 
@@ -44,7 +43,41 @@ class product extends object_data {
         $post_id=$tb->LastId();
         $money=12000;
         $meta=new meta_data();
-        $meta->insert($post_id, "_price", $money);
+        
+        $_product_attributes=[];
+        for ($index = 0; $index < 2; $index++) {
+            $_product_attributes[]=[
+                 "name" => "game".$index,
+                "value" => "nice",
+                "position" => $index,
+                "is_visible" => "1",
+                "is_variation" => "0",
+                "is_taxonomy" => "0",
+            ];
+        }
+        $data=[
+            "_product_image_gallery"=>22,          
+            "_price"=>22,
+            "_low_stock_amount"=>1243,
+            "_sale_price_dates_to"=>1578515399,
+            "_product_image_gallery"=>"1981,1989,1991,1990",
+            "_sale_price_dates_from"=>1577824200,
+            "_sale_price"=>77777,
+            "_regular_price"=>88888,
+            "_thumbnail_id"=>2055,
+            "_product_attributes"=> serialize($_product_attributes),         
+            "_stock_status"=>"instock",
+            "_stock"=>"98589",
+            "_manage_stock"=>"yes"
+        ];
+               
+        
+        foreach ($data as $key => $value) {
+             $meta->insert($post_id, $key, $value);
+        }
+    
+    
+       
        
     }
     public function delet           ($id){
@@ -96,6 +129,9 @@ $product=new product();
 //$metaPost=new meta_data();
 //$metaPost->insert(12, "this is test meta", "this worck :)");
 //$product->create(["game","this is post content","this is post mini","dsfasdfada","product"]);
-$product->create(["post_title","post_content","post_excerpt","post_name","product"]);
+$product->create(["omid this is kakla","post_content","post_excerpt","post_name","product"]);
 
 //dump($product->getAll());
+
+
+
