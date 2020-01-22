@@ -116,7 +116,27 @@ $whoops->register();
             }
             public function update          ($arrayProperty){}
             public function getAll(){     return   $this->getDB($this->tabel)->select("WHERE `post_type`= ?",["product"])->fetchAll();}
-            public function get($id){     return   $this->getDB($this->tabel)->select("WHERE `id`= ? AND `post_type`= ? ", [$id,"product"])->fetchAll();}
+            public function get($id)
+            {
+                $base_product=$this->getDB($this->tabel)->select("WHERE `id`= ? AND `post_type`= ? ", [$id,"product"])->fetch();
+                $base_product_id=$base_product["ID"];
+
+                $meta=new meta_data();
+                $base_product=array_merge($base_product,array("meta"=>$meta->get_all_postMeta($base_product_id)));
+
+                $TermRelation=new TermRelation();
+                $base_product_TermRelation=$TermRelation->get_by_obj($base_product_id);
+
+                $Term=new Term();
+                $base_product_terms=[];
+                foreach ($base_product_TermRelation as $term){
+                    $base_product_terms[]=$Term->get($term["term_taxonomy_id"]);
+                }
+                $base_product=array_merge($base_product,array("term"=>$base_product_terms));
+
+
+
+                return $base_product;  }
 
 
             }
@@ -231,7 +251,7 @@ $whoops->register();
             "12"
             );
 
-       dd($bba);
+       dd($product->get($bba));
     //$product->create(["game","this is post content","this is post mini","dsfasdfada","product"]);
 
 
