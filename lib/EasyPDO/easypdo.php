@@ -7,7 +7,7 @@ class EasyPDO {
     public $table = NULL;
     public $process = NULL;
 
-    public function connect($Host="localhost", $DatabaseName="woodmart", $UserName="root", $Password="", $CharSet = 'utf8') {
+    public function connect($Host="localhost", $DatabaseName="wordpress", $UserName="root", $Password="", $CharSet = 'utf8') {
         try {
             $this->db = new PDO('mysql:host=' . $Host . ';dbname=' . $DatabaseName . ';charset=' . $CharSet . ';', $UserName, $Password);
             return true;

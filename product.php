@@ -31,61 +31,83 @@ $whoops->register();
     
         class product       extends object_data {
 
-            public $post_title          =null,
-                   $post_content        =null,           
-                   $post_excrpt         =null,
-                   $post_name           =null,
-                   $post_type           =null,
-                   $post_money          =null;
-
+            public $postType="product";
             private $tabel              =null;
 
             public function __construct     ($tabel="wp_posts") { 
                 $this->tabel=$tabel;
             }
-            public function create          ($arrayProperty){
+            public function create (
+                $money,
+                $post_title,
+                $post_content,
+                $content_min,
+                $image_url,
+                $arrayGallery,
+                $Term_id,
+                $arrayAttribute,
+                $numberProduct,
+                $dayIsactive=null,
+                $moneyOff=null
 
+            ){
 
+                //creat raw product
                 $tb=$this->getDB($this->tabel);
                 $tb->cols=["post_title","post_content","post_excerpt","post_name","post_type"];
-                $tb->insert($arrayProperty, TRUE);
+                $tb->insert([$post_title,$post_content,$content_min,$post_title,$this->postType], TRUE);
                 $post_id=$tb->LastId();
-                $money=12000;
-                $meta=new meta_data();
 
+
+
+                //add meta data for product
+                $meta=new meta_data();
                 $_product_attributes=[];
-                for ($index = 0; $index < 2; $index++) {
+                $index=0;
+                foreach ($arrayAttribute as $Attribute){
                     $_product_attributes[]=[
-                         "name" => "game".$index,
-                        "value" => "nice",
+                        "name" =>  $Attribute[0],
+                        "value" => $Attribute[1],
                         "position" => $index,
                         "is_visible" => "1",
                         "is_variation" => "0",
                         "is_taxonomy" => "0",
                     ];
+                  $index++;
                 }
                 $data=[
-                    "_product_image_gallery"=>22,          
-                    "_price"=>22,
-                    "_low_stock_amount"=>1243,
-                    "_sale_price_dates_to"=>1578515399,
-                    "_product_image_gallery"=>"1981,1989,1991,1990",
-                    "_sale_price_dates_from"=>1577824200,
-                    "_sale_price"=>77777,
+                    "_product_image_gallery"=>1,
+                    "_product_image_gallery"=>1,
+                    "_thumbnail_id"=>1,
+                    "_price"=>$money,
+                    "_low_stock_amount"=>1,
                     "_regular_price"=>88888,
-                    "_thumbnail_id"=>2055,
-                    "_product_attributes"=> serialize($_product_attributes),         
                     "_stock_status"=>"instock",
-                    "_stock"=>"98589",
-                    "_manage_stock"=>"yes"
-                ];
+                    "_stock"=>$numberProduct,
+                    "_manage_stock"=>"yes",
 
+                    "_URLproduct"=>"yes",
+                    "_URLproduct_image"=>$image_url,
+                    "_URLproduct_gallery"=>serialize($arrayGallery)
+                ];
+                if(!empty($moneyOff)){$data["_sale_price"]=$moneyOff;}
+                if (!empty($dayIsactive)){
+                    $timeEND=$dayIsactive*24*60*60;
+                    $timeStart=time();
+                    $data["_sale_price_dates_from"]=$timeStart;
+                    $data["_sale_price_dates_to"]=$timeEND;
+                }
+                if(!empty($_product_attributes)){ $data["_product_attributes"]=serialize($_product_attributes);        }
 
                 foreach ($data as $key => $value) {
                      $meta->insert($post_id, $key, $value);
                 }
 
+                //add Term relation
+                $term=new TermRelation();
+                $term->creat($post_id,$Term_id);
 
+                return $post_id;
 
 
             }
@@ -197,6 +219,19 @@ $whoops->register();
     
 
       $product=new product();
+       $bba= $product->create(
+            1000,
+            "کالای تستی",
+            "این هم توضیح است",
+            "اینم توضیح کوتاه ",
+            "https://docs.moodle.org/dev/skins/moodledocs/sitebar/pix/logo.png",
+            ["https://docs.moodle.org/dev/skins/moodledocs/sitebar/pix/logo.png","https://docs.moodle.org/dev/skins/moodledocs/sitebar/pix/logo.png"],
+            12,
+            [["ویژگی ۱","قرمز"],["ویژگی ۲ ","۱ کیلو "]],
+            "12"
+            );
+
+       dd($bba);
     //$product->create(["game","this is post content","this is post mini","dsfasdfada","product"]);
 
 
