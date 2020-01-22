@@ -105,7 +105,15 @@ $whoops->register();
 
                 //add Term relation
                 $term=new TermRelation();
-                $term->creat($post_id,$Term_id);
+                if(is_array($Term_id))
+                {
+                    foreach ($Term_id as $t){
+                        $term->creat($post_id,$t);
+                     }
+                }
+                else
+                {$term->creat($post_id,$Term_id);}
+
 
                 return $post_id;
 
@@ -246,7 +254,7 @@ $whoops->register();
             "اینم توضیح کوتاه ",
             "https://docs.moodle.org/dev/skins/moodledocs/sitebar/pix/logo.png",
             ["https://docs.moodle.org/dev/skins/moodledocs/sitebar/pix/logo.png","https://docs.moodle.org/dev/skins/moodledocs/sitebar/pix/logo.png"],
-            12,
+            [12,1],
             [["ویژگی ۱","قرمز"],["ویژگی ۲ ","۱ کیلو "]],
             "12"
             );
