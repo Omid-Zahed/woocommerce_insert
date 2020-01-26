@@ -55,7 +55,7 @@ $whoops->register();
                 //creat raw product
                 $tb=$this->getDB($this->tabel);
                 $tb->cols=["post_title","post_content","post_excerpt","post_name","post_type"];
-                $tb->insert([$post_title,$post_content,$content_min,$post_title,$this->postType], TRUE);
+                $tb->insert([$post_title,$post_content,$content_min, urlencode(str_replace(" ", "-", $post_title)) ,$this->postType], TRUE);
                 $post_id=$tb->LastId();
 
 
@@ -81,7 +81,7 @@ $whoops->register();
                     "_thumbnail_id"=>1,
                     "_price"=>$money,
                     "_low_stock_amount"=>1,
-                    "_regular_price"=>88888,
+                    "_regular_price"=>$money,
                     "_stock_status"=>"instock",
                     "_stock"=>$numberProduct,
                     "_manage_stock"=>"yes",
@@ -247,19 +247,17 @@ $whoops->register();
     
 
       $product=new product();
-       $bba= $product->create(
-            1000,
-            "کالای تستی",
-            "این هم توضیح است",
-            "اینم توضیح کوتاه ",
-            "https://docs.moodle.org/dev/skins/moodledocs/sitebar/pix/logo.png",
-            ["https://docs.moodle.org/dev/skins/moodledocs/sitebar/pix/logo.png","https://docs.moodle.org/dev/skins/moodledocs/sitebar/pix/logo.png"],
-            [12,1],
+ dd($product->create(
+            154000,
+            "لپ تاپ15 اینچی ایسر مدل Aspire VX5-591G-710B",
+            "لپ تاپ 15 اینچی ایسر مدل Aspire VX5-591G-710B",
+            "ایسر لپ‌تاپ مخصوص بازی جدید خود را معرفی کرد. ایسر اسپایر VX5-591G با ویژگی‌های سخت‌افزاری جدید و قوی به بازار عرضه شده است. این لپ‌تاپ شبیه مدل‌های قدیمی‌تر Predator است و از رنگ مشکی و قرمز در آن استفاده شده است. بدنه‌ی این لپ‌تاپ پلاستیکی است و لوگوی ایسر با رنگ نقره‌ای در میانه‌ی قاب پشتی صفحه‌نمایش به‌چشم می‌خورد. قطعاتی از پشت و جلوی دستگاه، به‌همراه دکمه‌های WASD و نور پس‌زمینه‌ی کیبورد قرمزرنگ هستند و کاملا حس یک لپ‌تاپ خشن و مخصوص بازی را القا می‌کند. پردازنده‌ی مرکزی این دستگاه جدیدترین مدل پردازنده‌های نسل هفتم یعنی 7700HQ است که فرکانس کاری آن از ۲.۸ گیگاهرتز آغاز می‌شود و هنگام پردازش‌های سنگین با استفاده از فناوری Turbo Boost تا ۳.۸ گیگاهرتز می‌رسد. این قدرت برای اجرای برنامه‌های سنگین و بازی مناسب است و تقریبا از پس هر کاری برمی‌آید. حافظه‌ی رم آن ۱۶ گیگابایت از نوع DDR4 و حافظه‌ی داخلی آن متشکل از یک ترابایت هارددیسک است و فضای کافی برای نصب بازی‌ها و ذخیره‌ی فایل‌ها را در اختیار کاربر می‌گذارد. پردازنده‌ی گرافیکی این دستگاه ساخت شرکت NVIDIA با مدل GeForce GTX 1050 است که چهار گیگابایت حافظه‌ی اختصاصی را در اختیار کاربر قرار می‌دهد تا برای اجرای بازی‌ها با تنظیمات گرافیکی متوسط و بالا مشکلی نداشته باشد. صفحه‌نمایش ۱۵.۶اینچی با پنل IPS و کیفیت تصویر Full HD تصاویر خوب و قابل‌قبولی را ارائه می‌کند. روکش مات هم برای بازی‌کردن و فیلم‌دیدن و کار با لپ‌تاپ در محیط‌های پرنور بسیار خوب است و چشم را اذیت نمی‌کند. پورت‌های این دستگاه هم کامل است و همه‌ی پورت‌های لازم برای آن در نظر گرفته شده است. تنها پورتی که دیده نمی‌شود، VGA است که با توجه به دستگاه‌های جدید، دیگر خیلی از آن استفاده نمی‌شود. باتری ایسر VX5-591G یک باتری سه‌سلولی است که به گفته‌ی شرکت سازنده تا شش ساعت شارژدهی دارد که مسلما این مقدار هنگام کارهای سنگین و بازی کمتر خواهد شد. این لپ‌تاپ محصولی جدید با پردازنده‌ی جدید است که احتمالا طرفداران زیادی خواهد داشت.",
+            "https://dkstatics-public.digikala.com/digikala-products/1204692.jpg?x-oss-process=image/resize,h_1600/quality,q_80",
+            ["https://dkstatics-public.digikala.com/digikala-products/1204939.jpg?x-oss-process=image/resize,h_1600/quality,q_80",
+                "https://docs.moodle.org/dev/skins/moodledocs/sitebar/pix/logo.png",
+                "https://dkstatics-public.digikala.com/digikala-products/1205194.jpg?x-oss-process=image/resize,h_1600/quality,q_80",
+                "https://dkstatics-public.digikala.com/digikala-products/1205260.jpg?x-oss-process=image/resize,h_1600/quality,q_80"],
+            [39],
             [["ویژگی ۱","قرمز"],["ویژگی ۲ ","۱ کیلو "]],
-            "12"
-            );
-
-       dd($product->get($bba));
-    //$product->create(["game","this is post content","this is post mini","dsfasdfada","product"]);
-
-
+            "39"
+            ));   
